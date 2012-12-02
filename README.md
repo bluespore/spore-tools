@@ -14,9 +14,14 @@ Scripts Included
 Meta
 ----------
 Date:			05/08/2012
+
 Author:			Sean Bullock
+
 Url:			[BlueSpore.com](http://bluespore.com)               
+
 Twitter:		[@bluespore](http://twitter.com/bluespore)
+
+Company:		[CarterDigital](http://carterdigital.com.au/)
 
 
 
@@ -31,13 +36,14 @@ sporeSelect replaces native select dropdowns with a fully stylable unordered lis
 
 Usage
 ----------
-Just include the scripts in your head then execute 'run_sporeSelect()' and/or 'run_sporeCheck()' on document ready respectively.
+* Just include the scripts in your head then execute 'run_sporeSelect()' and/or 'run_sporeCheck()' on document ready respectively.
 
-Change the default dropdown text by adding an option with the value of 'label'.
+* Change the default dropdown text by adding an option with the value of 'label'.
 
-Add 'data-spore="0"' to any elements you do not want affected by the script.
+* Add 'data-spore="0"' to any elements you do not want affected by the script.
 
-Style to your hearts content. Why not throw some CSS3 animations on that badboy's active state?
+* Style to your hearts content. Why not throw some CSS3 animations on that badboy's active state?
 
-@recognise:
-It'd be rad if you tweeted at me to show appreciation.
+Recognise
+----------
+It'd be rad if you [tweeted at me](http://twitter.com/bluespore) to show appreciation.
