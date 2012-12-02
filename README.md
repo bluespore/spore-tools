@@ -1,9 +1,10 @@
 # SporeTools
 ## CSS3 Ready Custom Form Elements powered by jQuery
--------------------------
+----------------------
 Avoid cross browser form styling nightmares - Just drop it in and style the raw output. Makes form creation a breeze.
 
-
+---
+---
 
 ### Scripts Included
 ----------        
