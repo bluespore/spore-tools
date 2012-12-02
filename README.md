@@ -6,7 +6,7 @@ Avoid cross browser form styling nightmares - Just drop it in and style the raw 
 
 Scripts Included
 ----------        
-1. sporeCheck 
+1. sporeInput
 2. sporeSelect
 
 
@@ -27,7 +27,7 @@ Company:		[CarterDigital](http://carterdigital.com.au/)
 
 Description
 ----------
-sporeCheck replaces native checkbox inputs and radio buttons with easily stylable anchor elements that can instantly be hooked up to your sprite sheet.
+sporeInput replaces native checkbox inputs and radio buttons with easily stylable anchor elements that can instantly be hooked up to your sprite sheet.
 
 
 sporeSelect replaces native select dropdowns with a fully stylable unordered list appended to the body to ensure it'll never ruin your beautiful layouts.
@@ -36,7 +36,7 @@ sporeSelect replaces native select dropdowns with a fully stylable unordered lis
 
 Usage
 ----------
-* Just include the scripts in your head then execute 'run_sporeSelect()' and/or 'run_sporeCheck()' on document ready respectively.
+* Just include the scripts in your head then execute 'run_sporeSelect()' and/or 'run_sporeInput()' on document ready respectively.
 
 * Change the default dropdown text by adding an option with the value of 'label'.
 
