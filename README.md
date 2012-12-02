@@ -8,6 +8,7 @@ Scripts Included
 ----------        
 1. sporeInput
 2. sporeSelect
+3. sporeRating
 
 
 
@@ -32,17 +33,31 @@ sporeInput replaces native checkbox inputs and radio buttons with easily stylabl
 
 sporeSelect replaces native select dropdowns with a fully stylable unordered list appended to the body to ensure it'll never ruin your beautiful layouts.
 
+sporeRating adds a rating metre to your forms which grows to the mouse hover point. A click will set the rating and amend any form element value that needs to accomodate.
+
 
 
 Usage
 ----------
-* Just include the scripts in your head then execute 'run_sporeSelect()' and/or 'run_sporeInput()' on document ready respectively.
+
+--sporeInput
+* Include the scripts in your head then execute 'run_sporeInput()' on document ready.
+
+* Add 'data-spore="0"' to any elements you do not want affected by the script.
+
+--sporeSelect
+* Include the scripts in your head then execute 'run_sporeSelect()' on document ready.
 
 * Change the default dropdown text by adding an option with the value of 'label'.
 
 * Add 'data-spore="0"' to any elements you do not want affected by the script.
 
-* Style to your hearts content. Why not throw some CSS3 animations on that badboy's active state?
+--sporeRating
+* Add the attribue 'data-spore-rating' to any unordered list containing anchor elements.
+
+* Add an attribute of 'data-id' to match the value of an input field's (of that id) value with that of the sporeRating value.
+
+Style to your hearts content. Why not throw some CSS3 animations on that badboy's active state?
 
 
 
