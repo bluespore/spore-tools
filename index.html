@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<head>
+	<meta charset="UTF-8">
+	<title>sporeInput Tests</title>
+	<link rel="stylesheet" href="norm.css">
+	<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+	<script src="sporeInput.js"></script>
+	<script src="sporeSelect.js"></script>
+</head>
+<html>
+	<body>
+
+		<style type="text/css">
+			label:hover{cursor:pointer}
+			ul{list-style:none;margin:0;padding:0;}
+			.row{
+				width:100%;
+				margin:20px;
+			}
+		</style>
+		<script>
+			$(function()
+			{
+				run_sporeInput();
+				run_sporeSelect();
+			});
+		</script>
+
+		<div class="row">
+			<h2>Standard Checkbox</h2>
+			<input type="checkbox" name="checkbox1" id="checkbox1" />
+			<label for="checkbox1">Checkbox 1</label>
+
+			<h2>Checkbox Unaffected</h2>
+			<input type="checkbox" name="checkbox2" id="checkbox2" data-spore="0" />
+			<label for="checkbox2">Checkbox 2</label>
+		</div>
+
+		<div class="row">
+			<h2>Radio Buttons</h2>
+			<ul>
+				<li><input type="radio" name="radio_group" value="1" id="radio1" /><label for="radio1">Radio 1</label></li>
+				<li><input type="radio" name="radio_group" value="2" id="radio2" /><label for="radio2">Radio 2</label></li>
+				<li><input type="radio" name="radio_group" value="3" id="radio3" /><label for="radio3">Radio 3</label></li>
+			</ul>
+		</div>
+
+		<div class="row">
+			<h2>Standard Select</h2>
+			<select name="select1" id="select1">
+				<option value="label">Select an option</option>
+				<option value="1">Option 1</option>
+				<option value="2">Option 2</option>
+				<option value="3">Option 3</option>
+			</select>
+		</div>
+
+		<div class="row">
+			<h2>Standard Select with an option already selected</h2>
+			<select name="select2" id="select2">
+				<option value="1">Option 1</option>
+				<option value="2" selected>Option 2</option>
+				<option value="3">Option 3</option>
+			</select>
+		</div>
+
+		<div class="row">
+			<h2>Standard Select</h2>
+			<select name="select3" id="select3" data-spore="0">
+				<option value="1">Option 1</option>
+				<option value="2">Option 2</option>
+				<option value="3">Option 3</option>
+			</select>
+		</div>
+
+	</body>
+</html>
