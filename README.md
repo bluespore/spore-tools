@@ -42,15 +42,17 @@ sporeRating adds a rating metre to your forms which grows to the mouse hover poi
 ----------
 
 #### sporeInput
-* Include the scripts in your head then execute 'run_sporeInput()' on document ready.
+* Include the scripts in your head.
 * Add 'data-spore="0"' to any elements you do not want affected by the script.
 * Active class indicator: '.checked'
+* Execute 'run_sporeInput()' when new elements are added to the DOM.
 
 #### sporeSelect
-* Include the scripts in your head then execute 'run_sporeSelect()' on document ready.
+* Include the scripts in your head.
 * Change the default dropdown text by adding an option with the value of 'label'.
 * Add 'data-spore="0"' to any elements you do not want affected by the script.
 * Active class indicator: '.active'
+* Execute 'run_sporeSelect()' when new elements are added to the DOM.
 
 #### sporeRating
 * Add the attribue 'data-spore-rating' to any unordered list containing anchor elements.

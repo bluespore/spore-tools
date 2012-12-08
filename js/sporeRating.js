@@ -76,7 +76,7 @@ Run sporeRating
 Call this explicitly if you've added new elements to the DOM.
 
 ========== */
-function run_sporeSelect()
+function run_sporeRating()
 {
     //Initiate sporeRating
     $('ul[data-spore-rating]').each(function(){$(this).sporeRating();});
@@ -106,3 +106,6 @@ function changeRating(sporeRatingElement)
 		$('input#' + sporeRatingElement.attr('data-id')).val(sporeRatingElement.attr('data-count'));
 	}
 }
+$(function(){
+	run_sporeRating();
+});

@@ -124,3 +124,6 @@ function run_sporeInput()
         setTimeout( function(){ in_progress = false; }, 250 );
     });
 }
+$(function(){
+	run_sporeInput();
+});

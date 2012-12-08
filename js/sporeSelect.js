@@ -164,3 +164,6 @@ function run_sporeSelect()
     });
 
 }
+$(function(){
+	run_sporeSelect();
+});
