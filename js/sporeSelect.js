@@ -106,36 +106,48 @@ function run_sporeSelect()
 
     //Create elements
     $('select').each(function(){$(this).sporeSelect();});
+
+    //Change event
+    $('select').live('change', function()
+	{
+
+	 	var id = $(this).attr('id'),
+	 		val = $(this).val(),
+	  		custom = $('.options-list[data-id="' + id + '"]');
+
+ 		//Change label text
+ 		$('.select[data-id="' +id+ '"]').text(val);
+	});
     
     /* =====
     Click events
     ===== */
     $('.select').on('click', function(e)
     {
-            //Prevent closing based on document click
-    e.stopPropagation();
+        //Prevent closing based on document click
+	    e.stopPropagation();
             
-            var me      		= $(this),
-                id      		= me.attr('data-id'),
-                target  		= $('.options-list[data-id="' + id + '"]'),
-                active  		= target.hasClass('active'),
-                pos_x   		= me.offset().left,
-                pos_y   		= me.offset().top + me.height();
-            
-            //Close list if open
-            if(active)
-            {
-                target.removeClass('active').hide();
-            }
-            else
-            {
-                //Close others already active
-                $('.options-list.active').removeClass('active').hide();
+        var me      		= $(this),
+            id      		= me.attr('data-id'),
+            target  		= $('.options-list[data-id="' + id + '"]'),
+            active  		= target.hasClass('active'),
+            pos_x   		= me.offset().left,
+            pos_y   		= me.offset().top + me.height();
+        
+        //Close list if open
+        if(active)
+        {
+            target.removeClass('active').hide();
+        }
+        else
+        {
+            //Close others already active
+            $('.options-list.active').removeClass('active').hide();
 
-                //Move in place
-                target.css({top:pos_y,left:pos_x});
-                target.addClass('active').show();
-            }
+            //Move in place
+            target.css({top:pos_y,left:pos_x});
+            target.addClass('active').show();
+        }
     });
 
     //Set new selected value & close
@@ -148,7 +160,7 @@ function run_sporeSelect()
         var id = $(this).closest('.options-list').attr('data-id');
 
         //Set matching select element's new value
-        $('select#' + id).val($(this).attr('data-value'));
+        $('select#' + id).val($(this).attr('data-value')).trigger('change');
         
         //Update label
         $('.sporeSelect.select[data-id="' + id + '"]').text($(this).text());
