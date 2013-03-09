@@ -1,4 +1,4 @@
-# SporeTools
+# SporeTools by Sean Bullock
 ## CSS3 Ready Custom Form Elements powered by jQuery
 
 ----------------------

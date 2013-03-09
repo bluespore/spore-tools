@@ -1,4 +1,4 @@
-/* --------------------------------------------------
+/*--------------------------------------------------------------------------------
 
 @script:        sporeCheck
 @date:          05/08/2012
@@ -20,11 +20,11 @@ active state?
 @recognise:
 It'd be rad if you tweeted at me to show appreciation.
 
--------------------------------------------------- */
+--------------------------------------------------------------------------------*/
 (function($){
 
-    $.fn.sporeSelect = function()
-    {
+    $.fn.sporeSelect = function(){
+
     	//Leave alone if data-spore is set to 0
         if($(this).attr('data-spore') == 0) return false;
         
@@ -41,12 +41,13 @@ It'd be rad if you tweeted at me to show appreciation.
         if( $('.sporeSelect' + id).length>0 ) return false;
         
         //Build array
-        options.each(function(i)
-        {
+        options.each(function(i){
+
     		arr[i] = new Array();
             arr[i]['text'] = $(this).text();
             arr[i]['value'] = $(this).val();
 	        i++;
+
         });
         
         //Build anchor & list
@@ -60,11 +61,11 @@ It'd be rad if you tweeted at me to show appreciation.
                             + 'px;top:0;left:0;z-index:9000;">';
     
         //Spit it out
-        for(i=0;i<arr.length;i++)
-        {
+        for(i=0;i<arr.length;i++){
+
         	//We don't want the label selectable
-            if(arr[i].value != 'label')
-        	{
+            if(arr[i].value != 'label'){
+
 	            html_list   += '<li><a href="javascript:;" data-value="' + arr[i].value 
 	                        + '">' + arr[i].text + '</a></li>';
 			}
@@ -80,14 +81,18 @@ It'd be rad if you tweeted at me to show appreciation.
         $('body').prepend(html_list);
 
         //Show selected option on load
-	    $(window).load(function()
-	    {
-	        options.filter(':selected').each(function()
-	        {
-	            var val 		= $(this).val(),
-	            	id      	= $(this).closest('select').attr('id');
+	    $(window).load(function(){
+
+	        options.filter(':selected').each(function(){
+
+	            var 	val 		= $(this).val(),
+	            		id      	= $(this).closest('select').attr('id');
 
 	            $('.options-list[data-id="' + id + '"]').find('a[data-value="' + val + '"]').click();
+
+	            //Trigger change
+			    // $(this).trigger('change');
+
 	        });
 	    });
 
@@ -95,35 +100,34 @@ It'd be rad if you tweeted at me to show appreciation.
 
 })(jQuery);
 
-/* ==========
+/*--------------------------------------------------------------------------------
 
 Run sporeSelect
 Call this explicitly if you're dynamically adding new form elements to the DOM.
 
-========== */
-function run_sporeSelect()
-{
+--------------------------------------------------------------------------------*/
+function run_sporeSelect(){
 
     //Create elements
     $('select').each(function(){$(this).sporeSelect();});
 
     //Change event
-    $('select').live('change', function()
-	{
+    $('select').live('change', function(){
 
-	 	var id = $(this).attr('id'),
-	 		val = $(this).val(),
-	  		custom = $('.options-list[data-id="' + id + '"]');
+	 	var id 				= $(this).attr('id'),
+	 		val 			= $(this).text(),
+	  		custom 			= $('.options-list[data-id="' + id + '"]');
 
  		//Change label text
  		$('.select[data-id="' +id+ '"]').text(val);
+
 	});
     
     /* =====
     Click events
     ===== */
-    $('.select').on('click', function(e)
-    {
+    $('.select').on('click', function(e){
+
         //Prevent closing based on document click
 	    e.stopPropagation();
             
@@ -135,24 +139,26 @@ function run_sporeSelect()
             pos_y   		= me.offset().top + me.height();
         
         //Close list if open
-        if(active)
-        {
+        if(active){
+
             target.removeClass('active').hide();
+
         }
-        else
-        {
+        else{
+
             //Close others already active
             $('.options-list.active').removeClass('active').hide();
 
             //Move in place
             target.css({top:pos_y,left:pos_x});
             target.addClass('active').show();
+
         }
     });
 
     //Set new selected value & close
-    $('.options-list').find('a').on('click', function(e)
-    {
+    $('.options-list').find('a').on('click', function(e){
+
         //Prevent closing based on document click
         e.stopPropagation();
         
