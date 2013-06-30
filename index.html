@@ -12,6 +12,28 @@
 	</head>
 	<body>
 
+		<script>
+		$(document).ready(function(){
+
+			/*
+			Instantiate sporeInput
+			*/
+			$('input[type="radio"],input[type="checkbox"]').sporeInput();
+
+			/*
+			Instantiate sporeRating
+			*/
+			$('[data-spore-rating]').sporeRating({
+				pointElement: 'li',
+				callback: {
+					onRatingChange: function(){
+						console.info($(this).attr('data-spore-rating'));
+					}
+				}
+			});
+		});
+		</script>
+
 		<style type="text/css">
 			label:hover{cursor:pointer}
 			ul{list-style:none;margin:0;padding:0;}
@@ -25,8 +47,7 @@
 				display:inline-block;
 				margin:0 5px;
 			}
-			ul[data-spore-rating] li a{
-				display:block;
+			ul[data-spore-rating] li{
 				height:25px;
 				width:25px;
 				background:blue;
@@ -36,8 +57,31 @@
 				text-align:center;
 				text-decoration:none;
 			}
-			ul[data-spore-rating] li.active a{
+			ul[data-spore-rating] li.active{
 				background:red;
+			}
+			.sporeInput{
+				display:inline-block;
+				margin:0 10px 0 0;
+				color:orange;
+				padding:3px;
+				height:15px;
+				width:15px;
+				text-align:center;
+				line-height:15px;
+				font-weight:bold;
+				color:#fff;
+				border:1px solid #666;
+				box-shadow:1px 0px 2px rgba(0,0,0,.2);
+			}
+			.sporeInput.radio{
+				border-radius:1000px;
+				font-size:28px;
+			}
+			.sporeInput.checked{
+				color:green;
+				border:1px solid green;
+				background:#f1f1f1;
 			}
 			.row{
 				width:100%;
@@ -51,8 +95,12 @@
 			<label for="checkbox1">Checkbox 1</label>
 
 			<h2>Checkbox Unaffected</h2>
-			<input type="checkbox" name="checkbox2" id="checkbox2" data-spore="0" />
+			<input type="checkbox" name="checkbox2" id="checkbox2" data-spore="false" />
 			<label for="checkbox2">Checkbox 2</label>
+
+			<h2>Standard Checkbox Pre-Checked</h2>
+			<input type="checkbox" name="checkbox3" id="checkbox3" checked />
+			<label for="checkbox3">Checkbox 3</label>
 		</div>
 
 		<div class="row">
@@ -92,21 +140,26 @@
 			</select>
 		</div>
 
+		<!--sporeRatings-->
 		<div class="row">
 			<h2>Ratings</h2>
-			<input type="hidden" id="rating_input" />
-			<ul data-spore-rating data-id="rating_input">
-				<li><a href="javascript:;">1</a></li>
-				<li><a href="javascript:;">2</a></li>
-				<li><a href="javascript:;">3</a></li>
-				<li><a href="javascript:;">4</a></li>
-				<li><a href="javascript:;">5</a></li>
-				<li><a href="javascript:;">6</a></li>
-				<li><a href="javascript:;">7</a></li>
-				<li><a href="javascript:;">8</a></li>
-				<li><a href="javascript:;">9</a></li>
-				<li><a href="javascript:;">10</a></li>
+			<input type="hidden" id="rating_input" value="4" />
+			<ul data-spore-rating="4" data-spore-rating-id="rating_input">
+				<li>1</li>
+				<li>2</li>
+				<li>3</li>
+				<li>4</li>
+				<li>5</li>
+				<li>6</li>
+				<li>7</li>
+				<li>8</li>
+				<li>9</li>
+				<li>10</li>
 			</ul>
+		</div>
+
+		<div class="row" id="test">
+			
 		</div>
 
 	</body>

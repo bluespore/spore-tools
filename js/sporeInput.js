@@ -2,6 +2,7 @@
 
 @script:        sporeInput
 @date:          05/08/2012
+@updated: 		30/06/2013
 @author:        Sean Bullock
 @url:           http://bluespore.com               
 @twitter:       bluespore
@@ -19,112 +20,132 @@ to create custom elements, so the bullet point and tick will not appear afterwar
 But it's nice to show the script has run pre-CSS.
 
 @recognise:
-It'd be rad if you tweeted at me to show appreciation.
+Tweet me, bro! - @bluespore
 
 --------------------------------------------------------------------------------*/
 (function($){
 
-    $.fn.sporeInput = function(){
+    $.fn.sporeInput = function( options ){
 
-        //Leave alone if data-spore is set to 0
-        if($(this).attr('data-spore') == 0) return false;
+    	/*var config 	= $.extend({
 
-        var     me = $(this),
-                id = me.attr('id'),
-                checked = me.is(':checked'),
-                label = $('label[for="'+id+'"]'),
-                type = me.attr('type');
+    				}, options);*/
 
-        //If custom element already exists - do not run
-        if( $('.sporeInput#'+id).length>0 ) return false;
-        
-        //Check if matching label exists
-        if( !$('label[for="'+id+'"]').length>0 ){
+		/*
+        Initialise
+        */
+        function init(){
 
-            alert('sporeInput Error:\n<input type="' + type + '" id="' + id + '"> has no matching label tag');
-            return false;
+		    /*
+		    In progress ensures rapid clicking will not bug the states out.
+		    */
+		    var in_progress = false;
+		    
+		    /*
+		    Click faux element, triggers click on label - which is natively 
+		    connected to the actual input element.
+		    */
+		    $('.sporeInput').on('click', function(){
+		        $('label[for="' + $(this).attr('id') + '"]').click();
+		    });
 
-        }
-        
-        //Build HTML
-        var     html = '<a href="javascript:;" id="' + id + '" class="sporeInput ' + type;
-                html += (checked) ? ' checked' : '';
-                html += '">';
-                if(type=='checkbox') { html += '&#10003;'; } else { html += '&bull;' }
-                html += '</a>';
-        
-        //Append HTML & Hide Input
-        me.hide().after(html);
-        label.addClass('sporeInput-label');
-        if(type == "radio") label.attr('data-name', $(this).attr('name'));
+		    /*
+		    Clicking labels runs browser native functionality as expected as 
+		    we are not preventing the default behaviour, we're simply adding
+		    extra steps over the top to affect our faux elements.
+		    */
+		    $('.sporeInput-label').on('click', function(){
+		        
+		        if(in_progress) return false;
+		        
+		        in_progress = true;
+		        var input_type = $('input#' + $(this).attr('for')).attr('type');
+		        
+		        switch(input_type){
+		            case "radio":
+		                /*
+		                Uncheck other sporeInput radios from the same series
+		                */
+		                $('input[name="' + $(this).attr('data-spore-group') + '"]').each(function(){
+		                    $('.sporeInput#' + $(this).attr('id') + '.checked').removeClass('checked');
+		                });
+		                
+		                /*
+		                Then activate the one targetted
+		                */
+		                $('.sporeInput#' + $(this).attr('for')).addClass('checked');
+		                break;
+		            
+		            case "checkbox":
+		                $('.sporeInput#' + $(this).attr('for')).toggleClass('checked');
+		                break;
+		        }
+
+		        /*
+		        Wait set time before indicating process has completed.
+		        Number is arbitray and simply what I found to work well.
+		        */
+		        setTimeout( function(){ in_progress = false; }, 250 );
+		        
+		    });
+		}
+
+        /*
+		Define actions for the collection
+		*/
+    	this.each(function(){
+
+	    	/*
+	        Do not affect this element if
+	        data-spore is set to false
+	        */
+	        if($(this).attr('data-spore') == "false") return;
+
+	        var _self 		= $(this),
+				id 			= _self.attr('id'),
+				checked 	= _self.is(':checked'),
+				type 		= _self.attr('type'),
+				$label 		= $('label[for="' + id + '"]');
+
+	        /*
+	        If this element already configured, ignore
+	        */
+	        if( $('.sporeInput#' + id).length ) return;
+	        
+	        /*
+			Spit error if no matching label element
+			*/
+	        if( !$('label[for="' + id + '"]').length ){
+	            console.error('sporeInput Error:\n<input type="' + type + '" id="' + id + '"> has no matching label tag');
+	            return;
+	        }
+	        
+	        /*
+	        Build HTML
+	        */
+	        var checked = (checked) ? ' checked' : '',
+	        	ascii 	= (type=='checkbox') ? '&#10003;' : '&bull;'
+				html 	= '<span id="' + id + '" class="sporeInput ' + type
+	            		+ checked
+	            		+ '">'
+	                	+ ascii
+	                	+ '</span>';
+	        
+	        /*
+	        Append new HTML & hide native input
+	        */
+	        _self.hide().after( html );
+	        $label.addClass('sporeInput-label');
+	        if(type=="radio") $label.attr('data-spore-group', _self.attr('name'));
+
+	    });
+
+		/*
+		Callback once custom elements are available
+		*/
+		this.promise().done( init() );
+
+		return this;
     };
 
 })(jQuery);
-
-/*--------------------------------------------------------------------------------
-
-Run sporeInput
-Call this explicitly if you're dynamically adding new form elements to the DOM.
-
---------------------------------------------------------------------------------*/
-function run_sporeInput(){
-
-    //Create elements
-    $('input[type="checkbox"], input[type="radio"]').each(function(){$(this).sporeInput();});
-    
-    //Click Checkbox/Radio
-    $('.sporeInput').on('click', function(){
-
-        $('label[for="' + $(this).attr('id') + '"]').click();
-
-    });
-
-    //In progress ensures rapid clicking will not bug the states out.
-    var in_progress = false;
-    
-    //Label Click
-    $('.sporeInput-label').on('click', function(){
-
-        //Cancel if already running
-        if(in_progress) return false;
-
-        //We are running
-        in_progress = true;
-        
-        //Find type of input
-        var my_type = $('input#' + $(this).attr('for')).attr('type');
-        
-        //Act depending on type
-        switch(my_type){
-
-            //Radio input
-            case "radio":
-
-                //Uncheck sporeInput from same data series
-                $('input[name="' + $(this).attr('data-name') + '"]').each(function()
-                {
-                        $('.sporeInput#' + $(this).attr('id') + '.checked').removeClass('checked');
-                });
-                
-                //Then add class to clicked
-                $('.sporeInput#' + $(this).attr('for')).addClass('checked');
-
-                break;
-            
-            //Checkbox input
-            case "checkbox":
-
-                $('.sporeInput#' + $(this).attr('for')).toggleClass('checked');                       
-
-                break;
-        }
-
-        //Wait set time before indicating process has completed.
-        //Number is arbitray and simply what I found to work well.
-        setTimeout( function(){ in_progress = false; }, 250 );
-        
-    });
-}
-$(function(){
-	run_sporeInput();
-});

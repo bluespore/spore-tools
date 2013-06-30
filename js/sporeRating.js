@@ -2,6 +2,7 @@
 
 @script:        sporeRating
 @date:          02/12/2012
+@updated: 		30/06/2013
 @author:        Sean Bullock
 @url:           http://bluespore.com               
 @twitter:       bluespore
@@ -10,106 +11,104 @@
 An incremental rating selection script.
 
 @usage:
-Add the the data-attribute of 'data-spore-rating' to an unordered list to enable
-its functionality. If you'd like to take that same data and apply it to a hidden 
-form element for capture, simply add a 'data-id' attribute that matches the 
-hidden fields id. This way, the value of that field will be updated at the same 
-time as the sporeRating count.
+$('.selector').sporeRating({
+	activeClass: 'someClassName',
+	pointElement: 'li',
+	callback: {
+		onRatingChange: function(){
+			console.log(this);
+		}
+	}
+});
+
+The script will populate the rating on window load given the element has
+a data-attribute of 'data-spore-rating' equal to a numeric value within the 
+range of the number of child elements (as declared by 'pointElement').
+In addition, you can choose to add 'data-spore-rating-id' to delegate the id
+of an input element who's value will change on update of the rating.
+
+A callback method is also available for the update of the rating 'onRatingChange'.
+This is within the callback object when instantiating the plugin and returns
+the rating element that was affected.
 
 @recognise:
-It'd be rad if you tweeted at me to show appreciation.
+Tweet me, bro! - @bluespore
 
 --------------------------------------------------------------------------------*/
 (function($){
 
-    $.fn.sporeRating = function(){
+    $.fn.sporeRating = function( options ){
 
-    	var 	me 				= $(this),
-    			anchors 		= me.find('a');
-	    
-		anchors.on('hover', function(){
+    	/*
+		Defaults
+		*/
+		var config 	= $.extend({
+						activeClass: 'active',
+						pointElement: 'li',
+						callback: {
+							onRatingChange: function(){}
+						}
+					}, options );
 
-			var 	anchor 		= $(this);
-
-			//Fill ratings
-			anchor.parent()
-				.addClass('active')
-				.prevAll()
-				.addClass('active');
-
-			//Clear any after the current
-			anchor.parent()
-				.nextAll()
-				.removeClass('active');
-		});
-
-		//Update on click
-		anchors.on('click', function(){
-
-			var sporeRating = $(this).closest('ul[data-spore-rating]');
+		/*
+		Initiate a permanent change in rating
+		*/
+		function changeRating(e){
 			
-			//Set the rating
-			sporeRating.attr('data-count', $(this).parent().index()+1);
+			var count = $(e).attr('data-spore-rating') ? $(e).attr('data-spore-rating')-1 : 0;
 
-			//Ensure change is met
-			changeRating(sporeRating);
+			$(e).find( config.pointElement )
+				.removeClass( config.activeClass )
+				.eq(count)
+				.addClass( config.activeClass )
+				.prevAll()
+				.addClass( config.activeClass );
 
+			//If there is a matching input field, change that value too
+			if( $(e).attr('data-spore-rating-id') != undefined ){
+				$('input#' + $(e).attr('data-spore-rating-id')).val( $(e).attr('data-spore-rating') );
+			}
+		}
+
+		/*
+		Define actions for the collection
+		*/
+    	this.each(function(){
+
+    		var _self = $(this);
+		    
+		    /*
+		    On hover
+		    */
+			_self.find( config.pointElement ).on('hover', function(){
+				//Fill Points
+				$(this).addClass( config.activeClass ).prevAll().addClass( config.activeClass );
+				//Clear current
+				$(this).nextAll().removeClass( config.activeClass );
+			});
+
+			/*
+			On click
+			*/
+			_self.find( config.pointElement ).on('click', function(){
+				_self.attr('data-spore-rating', $(this).index()+1);
+				changeRating(this);
+
+				// var rating = $(this).index()+1;
+				config.callback.onRatingChange.call( _self );
+			});
+
+			/*
+			Ensure rating rolls back on exit if no new selection
+			*/
+			_self.on('mouseleave', function(){
+				changeRating(this);
+			});
 		});
 
-		//Set rating on page load if count already exists
-		$(window).load(function(){
+		changeRating(this);
 
-			changeRating(me);
-
-		});
-
-		//Also ensure it rolls back after mouse exit
-		me.on('mouseleave', function(){
-
-			changeRating(me);
-
-		});
+		return this;
     };
 
 })(jQuery);
-
-/*--------------------------------------------------------------------------------
-
-Run sporeRating
-Call this explicitly if you've added new elements to the DOM.
-
---------------------------------------------------------------------------------*/
-function run_sporeRating(){
-
-    //Initiate sporeRating
-    $('ul[data-spore-rating]').each(function(){$(this).sporeRating();});
-
-}
-
-/*--------------------------------------------------------------------------------
-
-changeRating
-Initiates the permanent change in rating
-
---------------------------------------------------------------------------------*/
-function changeRating(sporeRatingElement){
-
-	var 	me 				= sporeRatingElement,
-			count 			= sporeRatingElement.attr('data-count') ? sporeRatingElement.attr('data-count')-1 : 0;
-
-	me.find('li')
-		.removeClass('active')
-		.eq(count)
-		.addClass('active')
-		.prevAll()
-		.addClass('active');
-
-	//If there is a matching input field, change that value too
-	if(sporeRatingElement.attr('data-id') != undefined){
-
-		$('input#' + sporeRatingElement.attr('data-id')).val(sporeRatingElement.attr('data-count'));
-	}
-}
-$(function(){
-	run_sporeRating();
-});
