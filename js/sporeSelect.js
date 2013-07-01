@@ -267,7 +267,7 @@ Tweet me, bro! - @bluespore
 	        var html_label  = '<' + config.triggerElement + ' data-spore-select-id="' 
 	        				+ id + '" title="' + title + '" style="' + styles 
                             + 'width:' + width + 'px;" class="sporeSelect ' 
-                            + config.triggerElementClass + '" tabindex="0">' + label + '</a>',
+                            + config.triggerElementClass + '" tabindex="0">' + label + '</' + config.triggerElement + '>',
 
             	html_list   = '<' + config.listContainer + ' class="sporeSelect ' 
             				+ config.listClass + '" data-spore-select-id="' + id 
