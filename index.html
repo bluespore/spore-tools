@@ -5,7 +5,7 @@
 		<meta name="author" content="Sean Bullock - BlueSpore.com">
 		<title>sporeInput Tests - Sean Bullock (BlueSpore)</title>
 		<link rel="stylesheet" href="css/norm.css">
-		<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+		<script src="js/jquery.js"></script>
 		<script src="js/sporeInput.js"></script>
 		<script src="js/sporeSelect.js"></script>
 		<script src="js/sporeRating.js"></script>
@@ -76,10 +76,10 @@
 				list-style:none;
 				background:#47443D;
 				color:#fff;
-				overflow:none;
+				overflow:hidden;
 				opacity:0;
 
-				-moz-transition: height .1s ease-in-out;
+				-moz-transition: height .5s ease-in-out;
 			}
 			.sporeSelect.optionsList.active{
 				height:100px;
@@ -94,6 +94,9 @@
 			}
 			.sporeSelect.optionsList li:last-child{
 				border-bottom:0;
+			}
+			.sporeSelect.optionsList li:hover{
+				background:#999;
 			}
 			.sporeSelect.optionsTrigger{
 				display:block;
