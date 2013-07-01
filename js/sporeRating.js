@@ -94,7 +94,6 @@ Tweet me, bro! - @bluespore
 				_self.attr('data-spore-rating', $(this).index()+1);
 				changeRating(this);
 
-				// var rating = $(this).index()+1;
 				config.callback.onRatingChange.call( _self );
 			});
 

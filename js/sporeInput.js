@@ -1,5 +1,4 @@
 /*--------------------------------------------------------------------------------
-
 @script:        sporeInput
 @date:          05/08/2012
 @updated: 		30/06/2013
@@ -13,23 +12,14 @@ completely styled as needed and avoid browser specific form styling clashes
 often present with creating custom form elements.
 
 @usage:
-Just execute 'run_sporeInput' on document ready.
-Add 'data-spore="0"' to any input elements you do not want affected by the script.
-The main idea is that you'll be using sprite sheets and image replacement styling
-to create custom elements, so the bullet point and tick will not appear afterward:
-But it's nice to show the script has run pre-CSS.
+
 
 @recognise:
 Tweet me, bro! - @bluespore
-
 --------------------------------------------------------------------------------*/
 (function($){
 
     $.fn.sporeInput = function( options ){
-
-    	/*var config 	= $.extend({
-
-    				}, options);*/
 
 		/*
         Initialise
@@ -110,12 +100,12 @@ Tweet me, bro! - @bluespore
 	        /*
 	        If this element already configured, ignore
 	        */
-	        if( $('.sporeInput#' + id).length ) return;
+	        if( $('.sporeInput#' + id).length>0 ) return;
 	        
 	        /*
 			Spit error if no matching label element
 			*/
-	        if( !$('label[for="' + id + '"]').length ){
+	        if( !$('label[for="' + id + '"]').length>0 ){
 	            console.error('sporeInput Error:\n<input type="' + type + '" id="' + id + '"> has no matching label tag');
 	            return;
 	        }
