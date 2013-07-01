@@ -148,7 +148,7 @@ Tweet me, bro! - @bluespore
 
 			    			//Enter key
 			    			case 13:
-			    				h.click();
+			    				h.click().removeClass( config.optionHighlightClass );
 			    			break;
 
 			    			//Up arrow
@@ -209,12 +209,14 @@ Tweet me, bro! - @bluespore
 		    				case 27:
 		    					e.preventDefault();
 		    					f.removeClass('focused').blur();
+		    					h.removeClass( config.optionHighlightClass );
 		    					$(document).click();
 		    				break;
 
 		    				//Tab key
 		    				case 9:
 		    					$(document).click();
+		    					h.removeClass( config.optionHighlightClass );
 		    				break;
 			    		}
 			    	}
