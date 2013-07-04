@@ -34,8 +34,12 @@ Replaces native radio and checkbox inputs with anchor elements that can be
 completely styled as needed and avoid browser specific form styling clashes
 often present with creating custom form elements.
 
+----------
+
 # sporeSelect:
 Replaces native select dropdowns with a fully stylable unordered list appended to the body to ensure it'll never ruin your beautiful layouts.
+
+----------
 
 # sporeRating:
 The script will populate the rating on window load given the element has
