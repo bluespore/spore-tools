@@ -1,5 +1,5 @@
 /*--------------------------------------------------------------------------------
-@script:        sporeCheck
+@script:        sporeSelect
 @date:          05/08/2012
 @updated: 		01/07/2013
 @author:        Sean Bullock
