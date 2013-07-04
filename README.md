@@ -1,8 +1,8 @@
 # SporeTools by Sean Bullock
-## CSS3 Ready Custom Form Elements powered by jQuery
+## CSS3 Custom Form Elements powered by jQuery
 
 ----------------------
-Avoid cross browser form styling nightmares - Just drop it in and style the raw output. Makes form creation a breeze.
+Avoid cross browser form styling nightmares - Just drop it in and style the raw output.
 
 
 ### Scripts Included
@@ -17,6 +17,8 @@ Avoid cross browser form styling nightmares - Just drop it in and style the raw 
 ----------
 Date:			05/08/2012
 
+Last updated: 	04/07/2013
+
 Author:			Sean Bullock
 
 Url:			[BlueSpore.com](http://bluespore.com)               
@@ -29,12 +31,24 @@ Company:		[CarterDigital](http://carterdigital.com.au/)
 
 ### Description
 ----------
-sporeInput replaces native checkbox inputs and radio buttons with easily stylable anchor elements that can instantly be hooked up to your sprite sheet.
+sporeInput:
+Replaces native radio and checkbox inputs with anchor elements that can be
+completely styled as needed and avoid browser specific form styling clashes
+often present with creating custom form elements.
 
+sporeSelect:
+Replaces native select dropdowns with a fully stylable unordered list appended to the body to ensure it'll never ruin your beautiful layouts.
 
-sporeSelect replaces native select dropdowns with a fully stylable unordered list appended to the body to ensure it'll never ruin your beautiful layouts.
+sporeRating:
+The script will populate the rating on window load given the element has
+a data-attribute of 'data-spore-rating' equal to a numeric value within the 
+range of the number of child elements (as declared by 'pointElement').
+In addition, you can choose to add 'data-spore-rating-id' to delegate the id
+of an input element who's value will change on update of the rating.
 
-sporeRating adds a rating metre to your forms which grows to the mouse hover point. A click will set the rating and amend any form element value that needs to accomodate.
+A callback method is also available for the update of the rating 'onRatingChange'.
+This is within the callback object when instantiating the plugin and returns
+the rating element that was affected.
 
 
 
@@ -42,22 +56,80 @@ sporeRating adds a rating metre to your forms which grows to the mouse hover poi
 ----------
 
 #### sporeInput
-* Include the scripts in your head.
-* Add 'data-spore="0"' to any elements you do not want affected by the script.
-* Active class indicator: '.checked'
-* Execute 'run_sporeInput()' when new elements are added to the DOM.
+$('input[type="radio"],input[type="checkbox"]').sporeInput({
+	checkedClass: 		'checked',
+	tag: 				'span',
+	checkboxCharacter: 	'&#10003;',
+	radioCharacter: 	'&bull;',
+	callback: {
+		onCheck: function(){}
+	}
+});
 
 #### sporeSelect
-* Include the scripts in your head.
-* Change the default dropdown text by adding an option with the value of 'label'.
-* Add 'data-spore="0"' to any elements you do not want affected by the script.
-* Active class indicator: '.active'
-* Execute 'run_sporeSelect()' when new elements are added to the DOM.
+$('select').sporeSelect({
+
+	//Class applied to list container when open
+	activeClass: 			'active',
+
+	//Container of list options
+	listContainer: 			'ul',
+
+	//Class for option list container
+	listClass: 				'options-list',
+
+	//Tag for each option equivilent 
+	optionElement: 			'li',
+
+	//Class for highlighted list item
+	//when using keyboard mode
+	optionHighlightClass: 	'highlighted',
+
+	//Element you click
+	triggerElement: 		'span',
+
+	//Class on element you click
+	triggerElementClass: 	'select',
+
+	//Fallback text for initial prompt label
+	//Can also be set as an <option value="label">label</option>
+	//which would be excluded from the generated
+	//sporeSelect element
+	promptText: 			'&mdash;Please Select&mdash;',
+
+	//Desired z-index level for the opened menu
+	zIndex: 				9999,
+
+	//Allow navigation with arrow keys, quit with ESC
+	//and Enter key to make selection
+	keyboardMode: 			true,
+
+	//Define a function for successful selection
+	callback: {
+		onValueChange: function(){}
+	}
+});
 
 #### sporeRating
-* Add the attribue 'data-spore-rating' to any unordered list containing anchor elements.
-* Add an attribute of 'data-id' to match the value of an input field's (of that id) value with that of the sporeRating value.
-* Active class indicator: '.active'
+$('.selector').sporeRating({
+	activeClass: 'someClassName',
+	pointElement: 'li',
+	callback: {
+		onRatingChange: function(){
+			console.log(this);
+		}
+	}
+});
+
+The script will populate the rating on window load given the element has
+a data-attribute of 'data-spore-rating' equal to a numeric value within the 
+range of the number of child elements (as declared by 'pointElement').
+In addition, you can choose to add 'data-spore-rating-id' to delegate the id
+of an input element who's value will change on update of the rating.
+
+A callback method is also available for the update of the rating 'onRatingChange'.
+This is within the callback object when instantiating the plugin and returns
+the rating element that was affected.
 
 Style to your hearts content. Why not throw some CSS3 animations on the active states of these badboys.
 
@@ -65,4 +137,4 @@ Style to your hearts content. Why not throw some CSS3 animations on the active s
 
 ### Recognise
 ----------
-It'd be rad if you [tweeted at me](http://twitter.com/bluespore) to show appreciation.
+It'd be rad if you [tweeted me](http://twitter.com/bluespore)!

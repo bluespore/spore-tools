@@ -11,7 +11,48 @@ Replaces native <select> dropdowns with a fully stylable unordered list appended
 to the body to ensure it'll never ruin your beautiful layouts.
 
 @usage:
+$('select').sporeSelect({
 
+	//Class applied to list container when open
+	activeClass: 			'active',
+
+	//Container of list options
+	listContainer: 			'ul',
+
+	//Class for option list container
+	listClass: 				'options-list',
+
+	//Tag for each option equivilent 
+	optionElement: 			'li',
+
+	//Class for highlighted list item
+	//when using keyboard mode
+	optionHighlightClass: 	'highlighted',
+
+	//Element you click
+	triggerElement: 		'span',
+
+	//Class on element you click
+	triggerElementClass: 	'select',
+
+	//Fallback text for initial prompt label
+	//Can also be set as an <option value="label">label</option>
+	//which would be excluded from the generated
+	//sporeSelect element
+	promptText: 			'&mdash;Please Select&mdash;',
+
+	//Desired z-index level for the opened menu
+	zIndex: 				9999,
+
+	//Allow navigation with arrow keys, quit with ESC
+	//and Enter key to make selection
+	keyboardMode: 			true,
+
+	//Define a function for successful selection
+	callback: {
+		onValueChange: function(){}
+	}
+});
 
 @recognise:
 Tweet me, bro! - @bluespore
@@ -33,7 +74,7 @@ Tweet me, bro! - @bluespore
 						triggerElementClass: 	'select',
 						promptText: 			'&mdash;Please Select&mdash;',
 						zIndex: 				9999,
-						// keyboardMode: 			true,
+						keyboardMode: 			true,
 						callback: {
 							onValueChange: function(){}
 						}
@@ -138,85 +179,92 @@ Tweet me, bro! - @bluespore
 		    if( config.keyboardMode ){
 		    	$(document).keypress(function (e) {
 
-		    		var f 		= $('.focused'),
-		    			id 		= f.attr('data-spore-select-id'),
-		    			list 	= $('.' + config.listClass + '[data-spore-select-id="' + id + '"]' ),
-		    			h 		= list.find('.' + config.optionHighlightClass );
+		    		var $f 				= $('.focused'),
+		    			id 				= $f.attr('data-spore-select-id'),
+		    			$list 			= $('.' + config.listClass + '[data-spore-select-id="' + id + '"]' ),
+		    			$highLighted 	= $list.find('.' + config.optionHighlightClass );
 
-		    		if(f.length>0){
+		    		function getAmt(){
+		    			return parseInt(Math.ceil($list.find('.' + config.optionHighlightClass ).outerHeight() * $list.find('.' + config.optionHighlightClass ).index()));
+		    		}
+
+		    		if($f.length>0){
 			    		switch(e.keyCode){
 
 			    			//Enter key
 			    			case 13:
-			    				h.click().removeClass( config.optionHighlightClass );
+			    				$highLighted.click().removeClass( config.optionHighlightClass );
 			    			break;
 
 			    			//Up arrow
 			    			case 38:
 			    				e.preventDefault();
 
-			    				if(!list.hasClass( config.activeClass )){
-			    					f.click();
-			    					list.children().eq(0).addClass( config.optionHighlightClass );
+			    				if(!$list.hasClass( config.activeClass )){
+			    					$f.click();
+			    					$list.children().eq(0).addClass( config.optionHighlightClass );
 			    				}
 
 			    				//If not first option
-			    				if( !h.is(':first-child') ){
-			    					h.removeClass( config.optionHighlightClass )
+			    				if( !$highLighted.is(':first-child') ){
+			    					$highLighted.removeClass( config.optionHighlightClass )
 			    					.prev()
 			    					.addClass( config.optionHighlightClass );
 			    				}
 
 			    				//If first option
-			    				else if( h.is(':first-child') ){
-			    					h.removeClass( config.optionHighlightClass )
+			    				else if( $highLighted.is(':first-child') ){
+			    					$highLighted.removeClass( config.optionHighlightClass )
 			    					.siblings()
 			    					.filter(':last')
 			    					.addClass( config.optionHighlightClass );
 			    				}
 
-			    				list.scrollTop( Math.ceil(h.offset().top - list.offset().top) );
+			    				if($highLighted.length>0) $list.scrollTop( getAmt() );
+
+			    				// console.log( getAmt() );
 		    				break;
 
 		    				//Down arrow
 		    				case 40:
 		    					e.preventDefault();
 		    					
-		    					if(!list.hasClass( config.activeClass )){
-			    					f.click();
-			    					list.children().eq(0).addClass( config.optionHighlightClass );
+		    					if(!$list.hasClass( config.activeClass )){
+			    					$f.click();
+			    					$list.children().eq(0).addClass( config.optionHighlightClass );
 			    				}
 
 			    				//If not last option
-			    				if( !h.is(':last-child') ){
-			    					h.removeClass( config.optionHighlightClass )
+			    				if( !$highLighted.is(':last-child') ){
+			    					$highLighted.removeClass( config.optionHighlightClass )
 			    					.next()
 			    					.addClass( config.optionHighlightClass );
 			    				}
 
 			    				//If last option
-			    				else if( h.is(':last-child') ){
-			    					h.removeClass( config.optionHighlightClass )
+			    				else if( $highLighted.is(':last-child') ){
+			    					$highLighted.removeClass( config.optionHighlightClass )
 			    					.siblings()
 			    					.filter(':first')
 			    					.addClass( config.optionHighlightClass );
 			    				}
 
-			    				list.scrollTop( Math.ceil(h.offset().top - list.offset().top) );
+			    				if($highLighted.length>0) $list.scrollTop( getAmt() );
+			    				// console.log( getAmt );
 		    				break;
 
 		    				//ESC
 		    				case 27:
 		    					e.preventDefault();
-		    					f.removeClass('focused').blur();
-		    					h.removeClass( config.optionHighlightClass );
+		    					$f.removeClass('focused').blur();
+		    					$highLighted.removeClass( config.optionHighlightClass );
 		    					$(document).click();
 		    				break;
 
 		    				//Tab key
 		    				case 9:
 		    					$(document).click();
-		    					h.removeClass( config.optionHighlightClass );
+		    					$highLighted.removeClass( config.optionHighlightClass );
 		    				break;
 			    		}
 			    	}
@@ -334,7 +382,6 @@ Tweet me, bro! - @bluespore
 		init();
 
 		return this;
-
     }
 
 })(jQuery);

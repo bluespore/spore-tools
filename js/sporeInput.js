@@ -12,7 +12,15 @@ completely styled as needed and avoid browser specific form styling clashes
 often present with creating custom form elements.
 
 @usage:
-
+$('input[type="radio"],input[type="checkbox"]').sporeInput({
+	checkedClass: 		'checked',
+	tag: 				'span',
+	checkboxCharacter: 	'&#10003;',
+	radioCharacter: 	'&bull;',
+	callback: {
+		onCheck: function(){}
+	}
+});
 
 @recognise:
 Tweet me, bro! - @bluespore
@@ -20,6 +28,19 @@ Tweet me, bro! - @bluespore
 (function($){
 
     $.fn.sporeInput = function( options ){
+
+    	/*
+		Defaults
+		*/
+		var config 	= $.extend({
+						checkedClass: 		'checked',
+						tag: 				'span',
+						checkboxCharacter: 	'&#10003;',
+						radioCharacter: 	'&bull;',
+						callback: {
+							onCheck: function(){}
+						}
+					}, options );
 
 		/*
         Initialise
@@ -57,17 +78,17 @@ Tweet me, bro! - @bluespore
 		                Uncheck other sporeInput radios from the same series
 		                */
 		                $('input[name="' + $(this).attr('data-spore-group') + '"]').each(function(){
-		                    $('.sporeInput#' + $(this).attr('id') + '.checked').removeClass('checked');
+		                    $('.sporeInput#' + $(this).attr('id') + '.' + config.checkedClass).removeClass(config.checkedClass);
 		                });
 		                
 		                /*
 		                Then activate the one targetted
 		                */
-		                $('.sporeInput#' + $(this).attr('for')).addClass('checked');
+		                $('.sporeInput#' + $(this).attr('for')).addClass(config.checkedClass);
 		                break;
 		            
 		            case "checkbox":
-		                $('.sporeInput#' + $(this).attr('for')).toggleClass('checked');
+		                $('.sporeInput#' + $(this).attr('for')).toggleClass(config.checkedClass);
 		                break;
 		        }
 
@@ -113,13 +134,13 @@ Tweet me, bro! - @bluespore
 	        /*
 	        Build HTML
 	        */
-	        var checked = (checked) ? ' checked' : '',
-	        	ascii 	= (type=='checkbox') ? '&#10003;' : '&bull;'
-				html 	= '<span id="' + id + '" class="sporeInput ' + type
-	            		+ checked
+	        var checked = (checked) ? config.checkedClass : '',
+	        	ascii 	= (type=='checkbox') ? config.checkboxCharacter : config.radioCharacter,
+				html 	= '<' + config.tag + ' id="' + id + '" class="sporeInput ' + type
+	            		+ ' ' + checked
 	            		+ '">'
 	                	+ ascii
-	                	+ '</span>';
+	                	+ '</' + config.tag + '>';
 	        
 	        /*
 	        Append new HTML & hide native input

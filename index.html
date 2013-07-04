@@ -28,7 +28,7 @@
 				triggerElementClass: 	'optionsTrigger',
 				promptText: 			'&mdash;Please Select&mdash;',
 				zIndex: 				9999,
-				// keyboardMode: 			true,
+				keyboardMode: 			true,
 				callback: {
 					onValueChange: function(){}
 				}
@@ -37,7 +37,15 @@
 			/*
 			Instantiate sporeInput
 			*/
-			$('input[type="radio"],input[type="checkbox"]').sporeInput();
+			$('input[type="radio"],input[type="checkbox"]').sporeInput({
+				checkedClass: 		'checked',
+				tag: 				'span',
+				checkboxCharacter: 	'&#10003;',
+				radioCharacter: 	'&bull;',
+				callback: {
+					onCheck: function(){}
+				}
+			});
 
 			/*
 			Instantiate sporeRating
@@ -78,8 +86,6 @@
 				color:#fff;
 				overflow:hidden;
 				opacity:0;
-
-				-moz-transition: height .5s ease-in-out;
 			}
 			.sporeSelect.optionsList.active{
 				height:100px;
@@ -115,7 +121,9 @@
 				background:red;
 			}
 			.sporeSelect.focused{
-				background:blue;
+				background:#fff;
+				box-shadow:1px 1px 6px rgba(0,0,0,.4);
+				outline:none;
 			}
 
 			/*
