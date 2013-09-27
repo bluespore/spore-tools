@@ -23,9 +23,6 @@ Url:			[BlueSpore.com](http://bluespore.com)
 
 Twitter:		[@bluespore](http://twitter.com/bluespore)
 
-Company:		[CarterDigital](http://carterdigital.com.au/)
-
-
 
 ### Description
 ----------
