@@ -80,7 +80,7 @@ Tweet me, bro! - @bluespore
 		    /*
 		    On hover
 		    */
-			_self.find( config.pointElement ).on('hover', function(){
+			_self.find( config.pointElement ).on('mouseenter', function(){
 				//Fill Points
 				$(this).addClass( config.activeClass ).prevAll().addClass( config.activeClass );
 				//Clear current
